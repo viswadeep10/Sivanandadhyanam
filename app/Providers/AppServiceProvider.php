@@ -30,11 +30,5 @@ class AppServiceProvider extends ServiceProvider
         //
         Paginator::useBootstrap();
         Schema::defaultStringLength(191);
-        $categories = Category::where('status',1)->select('id','name')->get();
-        $programes = Program::where('status',1)->select('id','name','image','slug')->orderBy('order_no','ASC')->get();
-        $services = Service::where('status',1)->select('id','name')->orderBy('order_no','ASC')->get();
-                $setting = DB::table('settings')->where('id',1)->first();
-
-         View::share(['categories'=>$categories,'programes'=>$programes,'services'=>$services,'setting'=>$setting]);
     }
 }
