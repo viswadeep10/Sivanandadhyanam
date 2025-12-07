@@ -6,7 +6,7 @@
 <section class="home_banner">
     <div class="hero_wrapper">
         <div class="hero_section">
-            <img src="img/hero.jpg" alt="Meditation Image">
+            <img src="{{asset('assets/front/img/hero.jpg')}}" alt="Meditation Image">
             <a class="popup-youtube" href="https://www.youtube.com/watch?v=pBFQdxA-apI"><img src="{{asset('assets/front/img/play.png')}}" class="play_btn"></a> 
         </div>
         <div class="chat_box">
@@ -108,7 +108,7 @@
                     
                 </div>
             </div>
-            <img src="img/yoga2.png" class="yoga_img">
+            <img src="{{asset('assets/front/img/yoga2.png')}}" class="yoga_img">
         </div>
     </div>
 </section>

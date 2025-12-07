@@ -14,10 +14,10 @@
                 <li class="nav-item"><a class="nav-link" href="#">Schedule</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Contact Us</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Links</a></li>
-                <li class="nav-item"><a class="nav-link" href="#"><img src="img/language.png"> English</a></li>
+                <li class="nav-item"><a class="nav-link" href="#"><img src="{{asset('assets/front/img/language.png')}}"> English</a></li>
             </ul>
             <div class="d-flex gap-3 mr-t">
-                <a class="btn-outline"><img src="img/avatar.png"> Register Now</a>
+                <a class="btn-outline"><img src="{{asset('assets/front/img/avatar.png')}}"> Register Now</a>
                 <a class="btn-primary">Guruji Kirtanams</a>
             </div>
         </div>
