@@ -19,9 +19,35 @@
     <link media="all" type="text/css" rel="stylesheet" href="{{asset('assets/backend/css/app.css')}}">
     <link media="all" type="text/css" rel="stylesheet" href="{{asset('assets/backend/plugins/select2/css/select2.min.css')}}">
     <link media="all" type="text/css" rel="stylesheet" href="{{asset('assets/backend/plugins/summernote/summernote-bs4.css')}}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.6/cropper.css"/>
 
   <!-- end common css -->
   <script src="{{asset('assets/backend/js/app.js')}}"></script>
+   <style type="text/css">
+    #modal img {
+      display: block;
+      max-width: 100%;
+    }
+
+    #modal .preview {
+      text-align: center;
+      overflow: hidden;
+      width: 160px;
+      height: 160px;
+      margin: 10px;
+      border: 1px solid red;
+    }
+
+    #modal .section {
+      margin-top: 150px;
+      background: #fff;
+      padding: 50px 30px;
+    }
+
+    .modal-lg {
+      max-width: 1000px !important;
+    }
+  </style>
 
   </head>
 <body>
@@ -197,7 +223,33 @@
            </div>
     </div>
   </div>
-
+<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="img-container">
+            <div class="row">
+              <div class="col-md-8">
+                <img id="image" src="https://avatars0.githubusercontent.com/u/3456749">
+              </div>
+              <div class="col-md-4">
+                <div class="preview"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary" id="crop">Crop</button>
+        </div>
+      </div>
+    </div>
+  </div>
   <!-- base js -->
     <script src="{{asset('assets/backend/plugins/perfect-scrollbar/perfect-scrollbar.min.js')}}"></script>
       <script src="{{asset('assets/backend/js/off-canvas.js')}}"></script>
@@ -208,8 +260,87 @@
     <script src="{{asset('assets/backend/plugins/select2/js/select2.min.js')}}"></script>
     <script src="{{ asset('assets/backend/plugins/summernote/summernote-bs4.min.js') }}"></script>
     <script src="{{ asset('assets/backend/js/sweetalert.min.js') }}" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.6/cropper.js"></script>
+
 
     <script>
+
+          var $modal = $('#modal');
+    var image = document.getElementById('image');
+    var cropper;
+
+    /*------------------------------------------
+    --------------------------------------------
+    Image Change Event
+    --------------------------------------------
+    --------------------------------------------*/
+    $("body").on("change", ".image", function(e) {
+      var files = e.target.files;
+      var done = function(url) {
+        image.src = url;
+        $modal.modal('show');
+      };
+
+      var reader;
+      var file;
+      var url;
+
+      if (files && files.length > 0) {
+        file = files[0];
+        if (URL) {
+          done(URL.createObjectURL(file));
+        } else if (FileReader) {
+          reader = new FileReader();
+          reader.onload = function(e) {
+            done(reader.result);
+          };
+          reader.readAsDataURL(file);
+        }
+      }
+    });
+
+    /*------------------------------------------
+    --------------------------------------------
+    Show Model Event
+    --------------------------------------------
+    --------------------------------------------*/
+    $modal.on('shown.bs.modal', function() {
+      cropper = new Cropper(image, {
+        aspectRatio: NaN,
+        viewMode: 3,
+        preview: '.preview'
+      });
+    }).on('hidden.bs.modal', function() {
+      cropper.destroy();
+      cropper = null;
+    });
+
+    
+    /*------------------------------------------
+    --------------------------------------------
+    Crop Button Click Event
+    --------------------------------------------
+    --------------------------------------------*/
+    $("#crop").click(function() {
+      canvas = cropper.getCroppedCanvas({
+        width: 160,
+        height: 160,
+      });
+
+      canvas.toBlob(function(blob) {
+        url = URL.createObjectURL(blob);
+        var reader = new FileReader();
+        reader.readAsDataURL(blob);
+        reader.onloadend = function() {
+          var base64data = reader.result;
+          $("input[name='image_base64']").val(base64data);
+          $(".show-image").show();
+          $(".show-image").attr("src", base64data);
+          $("#modal").modal('toggle');
+        }
+      });
+    });
+
            function deleteRecord(id) {
 
       event.preventDefault(); // prevent form submit

@@ -6,24 +6,26 @@
 <section class="instructors instructors_detail">
     <div class="instructors_wrapper">
         <div class="instructors_bx">
-            <img src="img/img1.png" class="instructors_img" alt="">
-            <h5 class="instructors_rating">
-                <img src="img/star.png">
-                <img src="img/star.png">
-                <img src="img/star.png">
-                <img src="img/star.png">
-                <img src="img/star.png">
-            </h5>
-            <h6>Instructors</h6>
-            <p>It is a long-established fact that a reader will be distracted by the readable content...</p>
-            <p>The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.</p>
-            <p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.</p>
-            <p>It is a long-established fact that a reader will be distracted by the readable content...</p>
+            <div class="instructor_img_bx">
+                <img src="{{asset('assets/front/img/about-guruji.jpg')}}" class="instructors_img" alt="">
+                <div class="track">
+                    <a><img src="{{asset('assets/front/img/audio.png')}}"></a>
+                    <a><img src="{{asset('assets/front/img/video-play.png')}}"></a>
+                </div>
+            </div>
+            <h6>About Guruji</h6>
+            <p>Gu means ignorance and Ru means the remover. Guru means dispeller of ignorance or darkness. The almighty with his grace became Guru to emancipate the souls and help them reach the ultimate destination ie., Moksha or merge into him.</p>
+            <p>The lord took the form of Sri Satguru Dr. K. Sivananda Murthy garu to teach the ordinary souls stuck in the loop of births & deaths the not only the art of living but also more importantly the art of leaving. He was called “Guruvugaru”, “Guruji” by his disciples.</p>
+            <p>While he was a “Yogeswaraeswara” he spoke & taught his disciples on a wide range of subjects and various aspects of life & beyond impacting several souls. His discourses not only helped several souls evoking the desire for moksha but also speeding them towards it.</p>
+            <p>He was a great patriot which is evident from his various discourses where he expressed his love for this great country & its Sanatana Dharma.  From amongst his several one of the pearls of the wisdom that he shared was that one should think & work for the nation when eyes are open and when they are closed think about oneself.</p>
+            <p>He used to mention that safety & security of the society is of great importance to propel the soul closer to the lord. This can be achieved through group/community meditation, yoga, rituals. Doing a community yoga will give 10x benefit to the individual soul than performing it in solitude.</p>
+            <p>Based on his direction, this site helps the individuals to participate in group meditation to make our country & its citizens safe & secure.</p>
+            <p>For the seekers, there are several books authored by Guruji and his discourses are available in YouTube in the channels of Sivananda Murthy, MRSKK99, Sivananda Gurudham.</p>
         </div>
     </div>
 </section>
 
-<section class="schedule">
+<section class="schedule" id="scrollspyHeading2">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-sm-12 col-md-8 col-lg-5">

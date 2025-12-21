@@ -41,6 +41,12 @@
         <span class="menu-title">Dashboard</span>
       </a>
     </li>
+    <li class="nav-item">
+      <a class="nav-link" href="{{route('meditation.index')}}">
+        <i class="menu-icon mdi mdi-meditation"></i>
+        <span class="menu-title">Meditation</span>
+      </a>
+    </li>
   
   </ul>
 </nav> 
