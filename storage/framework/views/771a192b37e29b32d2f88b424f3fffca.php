@@ -3,24 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title')</title>
-    <link rel="icon" href="{{asset('assets/front/img/favicon.ico')}}" type="image/x-icon">
+    <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
+    <title><?php echo $__env->yieldContent('title'); ?></title>
+    <link rel="icon" href="<?php echo e(asset('assets/front/img/favicon.ico')); ?>" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link href="{{asset('assets/front/css/bootstrap.min.css')}}?ver=<?php echo time()?>" rel="stylesheet">
-    <link href="{{asset('assets/front/css/magnific-popup.css')}}?ver=<?php echo time()?>" rel="stylesheet">
-    <link href="{{asset('assets/front/css/style.css')}}?ver=<?php echo time()?>" rel="stylesheet">
+    <link href="<?php echo e(asset('assets/front/css/bootstrap.min.css')); ?>?ver=<?php echo time()?>" rel="stylesheet">
+    <link href="<?php echo e(asset('assets/front/css/magnific-popup.css')); ?>?ver=<?php echo time()?>" rel="stylesheet">
+    <link href="<?php echo e(asset('assets/front/css/style.css')); ?>?ver=<?php echo time()?>" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.26.10/dist/sweetalert2.min.css" rel="stylesheet">
 
     <script>
-        var loggedIn = {{ auth()->check() ? 'true' : 'false' }};
+        var loggedIn = <?php echo e(auth()->check() ? 'true' : 'false'); ?>;
     </script>
     
 </head>
 
 <body>
-@include('front.layouts.header')
-@yield('content')
+<?php echo $__env->make('front.layouts.header', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
+<?php echo $__env->yieldContent('content'); ?>
 <div class="modal fade auth" id="SignUp" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -28,19 +28,19 @@
                 <h5 class="modal-title text-center" id="exampleModalToggleLabel">Sign Up</h5>
             </div>
             <div class="modal-body">
-                <form method="post" action="{{route('custom_register.post')}}">
-                    @csrf
+                <form method="post" action="<?php echo e(route('custom_register.post')); ?>">
+                    <?php echo csrf_field(); ?>
 
                     <div class="form-group">
-                        <label class="form_img"><img src="{{asset('assets/front/img/user.png')}}"></label>
+                        <label class="form_img"><img src="<?php echo e(asset('assets/front/img/user.png')); ?>"></label>
                         <input type="text" class="form-control" name="name" id="fullname" aria-describedby="emailHelp" placeholder="Full Name">
                     </div>
                     <div class="form-group">
-                        <label class="form_img"><img src="{{asset('assets/front/img/email.png')}}"></label>
+                        <label class="form_img"><img src="<?php echo e(asset('assets/front/img/email.png')); ?>"></label>
                         <input type="email" class="form-control" name="email" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Email">
                     </div>
                     <div class="form-group">
-                        <label class="form_img"><img src="{{asset('assets/front/img/phone.png')}}"></label>
+                        <label class="form_img"><img src="<?php echo e(asset('assets/front/img/phone.png')); ?>"></label>
                         <input type="number" class="form-control" name="mobile" id="exampleInputMobile1" aria-describedby="emailHelp" placeholder="Mobile Number" min="1">
                     </div>
                     <button class="btn-primary" type="button" id="Register">Sign Up</button>
@@ -59,10 +59,10 @@
                 <h5 class="modal-title text-center" id="exampleModalToggleLabel2">Sign In</h5>
             </div>
             <div class="modal-body">
-                <form method="post" action="{{route('custom_login.post')}}">
-                    @csrf
+                <form method="post" action="<?php echo e(route('custom_login.post')); ?>">
+                    <?php echo csrf_field(); ?>
                 <div class="form-group">
-                        <label class="form_img"><img src="{{asset('assets/front/img/phone.png')}}"></label>
+                        <label class="form_img"><img src="<?php echo e(asset('assets/front/img/phone.png')); ?>"></label>
                         <input type="number" class="form-control" name="mobile" id="exampleInputMobile2" aria-describedby="emailHelp" placeholder="Mobile Number">
                     </div>
                     <button class="btn-primary" type="button" id="Login">Sign In</button>
@@ -78,12 +78,12 @@
 
 
 
-@include('front.layouts.footer')
+<?php echo $__env->make('front.layouts.footer', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
  <!-- Footer End Here -->
  <!-- Bootstrap Script -->
-<script type="text/javascript" src="{{asset('assets/front/js/jquery-3.7.1.min.js')}}"></script>
-<script src="{{asset('assets/front/js/jquery.magnific-popup.js')}}"></script>
-<script src="{{asset('assets/front/js/bootstrap.bundle.min.js')}}"></script>
+<script type="text/javascript" src="<?php echo e(asset('assets/front/js/jquery-3.7.1.min.js')); ?>"></script>
+<script src="<?php echo e(asset('assets/front/js/jquery.magnific-popup.js')); ?>"></script>
+<script src="<?php echo e(asset('assets/front/js/bootstrap.bundle.min.js')); ?>"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.26.10/dist/sweetalert2.all.min.js"></script>
       <script src="https://js.pusher.com/8.4.0/pusher.min.js"></script>
 
@@ -262,9 +262,9 @@ if(loggedIn) {
     Pusher.logToConsole = true;
 
     // Init Pusher
-    var pusher = new Pusher("{{ config('broadcasting.connections.pusher.key') }}", {
-        cluster: "{{ config('broadcasting.connections.pusher.options.cluster') }}",
-        authEndpoint: "{{ url('/broadcasting/auth') }}",
+    var pusher = new Pusher("<?php echo e(config('broadcasting.connections.pusher.key')); ?>", {
+        cluster: "<?php echo e(config('broadcasting.connections.pusher.options.cluster')); ?>",
+        authEndpoint: "<?php echo e(url('/broadcasting/auth')); ?>",
            auth: {
         headers: {
             'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content,
@@ -274,8 +274,8 @@ if(loggedIn) {
     withCredentials: true
     });
 
-    let chatId = "{{ $chat->id ?? 0}}";
-    let userId = "{{ auth()->id() }}";
+    let chatId = "<?php echo e($chat->id ?? 0); ?>";
+    let userId = "<?php echo e(auth()->id()); ?>";
 
     let channel = pusher.subscribe("private-chat." + chatId);
 
@@ -302,9 +302,9 @@ SignIn.show()
         if(!msg) return;
 
         $.ajax({
-        url : "{{ route('message') }}",
+        url : "<?php echo e(route('message')); ?>",
         data : {
-            "_token": "{{ csrf_token() }}",
+            "_token": "<?php echo e(csrf_token()); ?>",
             chat_id: chat_id,
             message: msg
         },
@@ -323,3 +323,4 @@ SignIn.show()
 </script>
 </body>
 </html>
+<?php /**PATH C:\wamp64\www\Sivanandadhyanam\resources\views/front/layouts/front-layout.blade.php ENDPATH**/ ?>

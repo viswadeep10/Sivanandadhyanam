@@ -3,8 +3,10 @@
 use App\Models\Chat;
 use Illuminate\Support\Facades\Broadcast;
 
-Broadcast::channel('chat.{chatId}', function ($user, $chatId) {
-        if ($user->hasRole('admin')) {
+Broadcast::channel('chat.{chatId}', function ($user, $chatId) 
+{
+        if ($user->hasRole('Admin')) 
+            {
         return true;
     }
 

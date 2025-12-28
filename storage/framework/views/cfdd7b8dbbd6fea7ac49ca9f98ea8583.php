@@ -1,6 +1,5 @@
-@extends('admin.layouts.admin-layout')
-@section('title', 'Dashboard')
-@section('content')
+<?php $__env->startSection('title', 'Dashboard'); ?>
+<?php $__env->startSection('content'); ?>
   <style>
 
   /* New */
@@ -44,18 +43,18 @@
           <div class="chat_list">
             <h4>Recent</h4>
           </div>
-          @if($chats) 
-                @foreach($chats as $chat)
-          <div class="chat_list" onclick="startChat(this,'{{$chat->user->name}}',{{$chat->id}})">
+          <?php if($chats): ?> 
+                <?php $__currentLoopData = $chats; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $chat): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+          <div class="chat_list" onclick="startChat(this,'<?php echo e($chat->user->name); ?>',<?php echo e($chat->id); ?>)">
             <div class="chat_u_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="user"> </div>
             <div class="u_msg_detail">
-              <h6>{{$chat->user->name ?? ''}}</h6>
-              <p class="u_msg">{{$chat->messages->last()->message}}</p>
+              <h6><?php echo e($chat->user->name ?? ''); ?></h6>
+              <p class="u_msg"><?php echo e($chat->messages->last()->message); ?></p>
             </div>
-            <div class="chat_time">{{ date("M j", strtotime($chat->messages->last()->created_at))}}</div>
+            <div class="chat_time"><?php echo e(date("M j", strtotime($chat->messages->last()->created_at))); ?></div>
           </div>
-          @endforeach
-           @endif
+          <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+           <?php endif; ?>
       </div>
       <div class="chat_wrapper chat_box col-md-6">
         <div class="msg_container">
@@ -81,7 +80,7 @@
           </div>
           <div class="input-group type_msg">
             <input class="form-control" placeholder="Type message..." id="msg">
-            <button class="btn-primary text-white" onclick="sendMessage()"><img src="{{asset('assets/front/img/send.png')}}"></button>
+            <button class="btn-primary text-white" onclick="sendMessage()"><img src="<?php echo e(asset('assets/front/img/send.png')); ?>"></button>
           </div>
         </div>
       </div>
@@ -92,16 +91,16 @@
   <script>
   $.ajaxSetup({
       headers: {
-          'X-CSRF-TOKEN': "{{ csrf_token() }}"
+          'X-CSRF-TOKEN': "<?php echo e(csrf_token()); ?>"
       }
   });
 
  Pusher.logToConsole = true;
 
     // Init Pusher
-    var pusher = new Pusher("{{ config('broadcasting.connections.pusher.key') }}", {
-        cluster: "{{ config('broadcasting.connections.pusher.options.cluster') }}",
-        authEndpoint: "{{ url('/broadcasting/auth') }}",
+    var pusher = new Pusher("<?php echo e(config('broadcasting.connections.pusher.key')); ?>", {
+        cluster: "<?php echo e(config('broadcasting.connections.pusher.options.cluster')); ?>",
+        authEndpoint: "<?php echo e(url('/broadcasting/auth')); ?>",
            auth: {
         headers: {
             'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content,
@@ -148,9 +147,9 @@ function messageHistory(chatId)
 {
 
    $.ajax({
-        url : "{{ route('messageHistory') }}",
+        url : "<?php echo e(route('messageHistory')); ?>",
         data : {
-            "_token": "{{ csrf_token() }}",
+            "_token": "<?php echo e(csrf_token()); ?>",
             chat_id: chatId,
         },
         type : 'POST',
@@ -180,9 +179,9 @@ function sendMessage()
         if(chatID>0)
         {
         $.ajax({
-        url : "{{ route('message') }}",
+        url : "<?php echo e(route('message')); ?>",
         data : {
-            "_token": "{{ csrf_token() }}",
+            "_token": "<?php echo e(csrf_token()); ?>",
             chat_id: chatID,
             message: msg
         },
@@ -204,5 +203,7 @@ function sendMessage()
       box.scrollTop = box.scrollHeight;
   }
   </script>
-@endsection
+<?php $__env->stopSection(); ?>
 
+
+<?php echo $__env->make('admin.layouts.admin-layout', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\wamp64\www\Sivanandadhyanam\resources\views/admin/home.blade.php ENDPATH**/ ?>
