@@ -5,12 +5,18 @@
 @section('content')
 <section class="instructors instructors_detail">
     <div class="instructors_wrapper">
-        <div class="instructors_bx">
-            <div class="instructor_img_bx">
+        <div class="instructors_bx" style="width:100%">
+            <div class="instructor_img_bx" >
                 <img src="{{asset('assets/front/img/meditation.jpeg')}}" class="instructors_img" alt="">
                 <div class="track">
-                    <a><img src="{{asset('assets/front/img/audio.png')}}"></a>
-                    <a><img src="{{asset('assets/front/img/video-play.png')}}"></a>
+                    <audio class="audio-player">
+                            <source src="{{asset('assets/front/dhyasa.mp3')}}" type="audio/mpeg">
+                        </audio>
+                    <a onclick="playAudio(this.previousElementSibling, this)" href="javascript:">  
+                         <img src="{{asset('assets/front/img/audio.png')}}" class="play">
+                        <img src="{{asset('assets/front/img/pause.png')}}" class="pause d-none">
+                    </a>
+                    <!-- <a ><img src="{{asset('assets/front/img/video-play.png')}}"></a> -->
                 </div>
             </div>
             <h6>Dhyasa</h6>
@@ -22,7 +28,7 @@
     </div>
 </section>
 
-<section class="schedule" id="scrollspyHeading2">
+<!-- <section class="schedule" id="scrollspyHeading2">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-sm-12 col-md-8 col-lg-5">
@@ -40,7 +46,7 @@
             </div>
         </div>
     </div>
-</section>
+</section> -->
 
 @endsection
  

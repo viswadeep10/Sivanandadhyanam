@@ -47,6 +47,12 @@
         <span class="menu-title">Meditation</span>
       </a>
     </li>
+    <li class="nav-item">
+      <a class="nav-link" href="{{route('schedule.index')}}">
+        <i class="menu-icon mdi mdi-calendar"></i>
+        <span class="menu-title">Schedule</span>
+      </a>
+    </li>
   
   </ul>
 </nav> 

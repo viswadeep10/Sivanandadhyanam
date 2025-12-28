@@ -47,6 +47,12 @@
         <span class="menu-title">Meditation</span>
       </a>
     </li>
+    <li class="nav-item">
+      <a class="nav-link" href="<?php echo e(route('schedule.index')); ?>">
+        <i class="menu-icon mdi mdi-calendar"></i>
+        <span class="menu-title">Schedule</span>
+      </a>
+    </li>
   
   </ul>
 </nav> <?php /**PATH /home/u691775676/domains/sivanandadhyanam.in/public_html/resources/views/admin/layouts/sidebar.blade.php ENDPATH**/ ?>

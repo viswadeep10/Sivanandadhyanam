@@ -8,31 +8,40 @@
     <section class="home_banner">
         <div class="hero_wrapper">
             <div class="hero_section">
-<!--                 <img src="{{asset('assets/front/img/hero.jpg')}}" alt="Meditation Image">
-                <a class="popup-youtube" href="https://www.youtube.com/watch?v=pBFQdxA-apI"><img src="{{asset('assets/front/img/play.png')}}" class="play_btn"></a> 
- -->            
-<video width="100%" controls id="videoId">
+                <img src="{{asset('assets/front/img/hero.jpg')}}" alt="Meditation Image">
+
+                <audio class="audio-player">
+                            <source src="" type="audio/mpeg">
+                        </audio>
+                        <a onclick="playAudio(this.previousElementSibling, this)" href="javascript:" class="popup-youtube">
+                        <img src="{{asset('assets/front/img/play.png')}}" class="play_btn">
+                        <img src="{{asset('assets/front/img/pause.png')}}" class="pause d-none"></a>
+                        
+            
+<!-- <video width="100%" controls id="videoId">
   <source src="{{asset('assets/front/Dhyanam_one.mp4')}}" type="video/mp4">
-</video>
+</video> -->
 
 </div>
+
             <div class="chat_box">
                 <div class="chat_head">
                     <p>Powered by <strong>Sathguru Sivananda Murthy Garu</strong></p>
                 </div>
                 <div class="msg_container">
-                    <div class="msg">
-                        <p>Hello there, this is just an example, <b>it’s not a real chat</b></p>
+                <div class="messages">
+                    @if($messages)
+                            @foreach($messages as $msg)
+                    <div class="msg {{ $msg->sender_id == auth()->id() ? 'sender' : 'receiver' }}">
+                        <p>{{ $msg->message }}</p>
                     </div>
-                    <div class="msg">
-                        <p>This is the commercial message of the home page that can be customized...</p>
-                    </div>
-                    <div class="msg">
-                        <p>This is the commercial message of the home page that can be customized...</p>
-                    </div>
+                            @endforeach
+                    @endif
+
+                  </div>
                     <div class="input-group type_msg">
-                        <input class="form-control" placeholder="Type message...">
-                        <button class="btn-primary text-white"><img src="{{asset('assets/front/img/send.png')}}"></button>
+                        <input class="form-control" placeholder="Type message..." id="msg">
+                        <button class="btn-primary text-white" onclick="sendMessage({{ $chat ? $chat->id : 0 }})"><img src="{{asset('assets/front/img/send.png')}}"></button>
                     </div>
                 </div>
             </div>
@@ -50,7 +59,9 @@
                         <audio class="audio-player">
                             <source src="{{asset('uploads/'.$meditaion->audio)}}" type="audio/mpeg">
                         </audio>
-                        <a onclick="playAudio(this.previousElementSibling, this)"><img src="{{asset('assets/front/img/audio.png')}}"></a>
+                        <a onclick="playAudio(this.previousElementSibling, this)" href="javascript:">
+                            <img src="{{asset('assets/front/img/audio.png')}}" class="play">
+                        <img src="{{asset('assets/front/img/pause.png')}}" class="pause d-none"></a>
                         
 
                         <!-- <a><img src="{{asset('assets/front/img/video-play.png')}}"></a> -->

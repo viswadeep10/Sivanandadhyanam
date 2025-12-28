@@ -5,7 +5,11 @@ use App\Http\Controllers\PageController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\MeditationController;
+use App\Http\Controllers\Admin\ScheduleController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\MessageController;
+use Illuminate\Support\Facades\Broadcast;
+
 
 
 
@@ -19,9 +23,12 @@ Route::get('/dhyasa', [PageController::class, 'dhyasa']);
 Route::post('post-login', [AuthController::class, 'postLogin'])->name('custom_login.post'); 
 Route::post('post-registration', [AuthController::class, 'postRegistration'])->name('custom_register.post'); 
 Route::get('logout', [AuthController::class, 'logout'])->name('custom_logout');
+//user
+Route::middleware('auth')->group(function () {
+    Route::post('sendMessage', [MessageController::class, 'sendMessage'])->name('message');
+});
 
-
-
+Broadcast::routes(['middleware' => ['web', 'auth']]);
 Auth::routes();
 
 //admin
@@ -29,7 +36,9 @@ Route::prefix('admin')->group(function () {
     Route::get('/', [LoginController::class, 'showLoginForm']);
     Route::middleware('auth')->group(function () {
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+        Route::post('/messages', [DashboardController::class, 'messageHistory'])->name('messageHistory');
         Route::resource('meditation', MeditationController::class);
+        Route::resource('schedule', ScheduleController::class);
 
 });
 });

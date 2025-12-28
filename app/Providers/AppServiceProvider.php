@@ -10,6 +10,7 @@ use App\Models\Program;
 use App\Models\Service;
 use Illuminate\Support\Facades\View;
 use DB;
+use Illuminate\Support\Facades\Broadcast;
 
 
 class AppServiceProvider extends ServiceProvider
@@ -30,5 +31,7 @@ class AppServiceProvider extends ServiceProvider
         //
         Paginator::useBootstrap();
         Schema::defaultStringLength(191);
+        Broadcast::routes(['middleware' => ['web', 'auth']]);
+        require base_path('routes/channels.php');
     }
 }

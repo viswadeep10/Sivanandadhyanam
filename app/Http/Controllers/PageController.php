@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
 use App\Models\Meditation;
-
+use App\Models\Chat;
 use DB;
 
 
@@ -16,9 +16,20 @@ class PageController extends Controller
     
     public function index()
     {
+        
         $meditaions = Meditation::where('status',1)->orderBy('position','ASC')->get();
+        $chat= NULL;
+        $messages= NULL;
 
-        return view('front.index',compact('meditaions'));
+        if(auth()->id()) {
+        $chat = Chat::firstOrCreate([
+        'user_id' => auth()->id()
+    ]);
+
+    $messages = $chat->messages()->get();
+   }
+
+        return view('front.index',compact('meditaions','chat','messages'));
     }
     public function about()
     {

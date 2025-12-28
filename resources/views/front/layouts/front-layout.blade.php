@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title')</title>
     <link rel="icon" href="{{asset('assets/front/img/favicon.ico')}}" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -10,6 +11,7 @@
     <link href="{{asset('assets/front/css/magnific-popup.css')}}?ver=<?php echo time()?>" rel="stylesheet">
     <link href="{{asset('assets/front/css/style.css')}}?ver=<?php echo time()?>" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.26.10/dist/sweetalert2.min.css" rel="stylesheet">
+
     <script>
         var loggedIn = {{ auth()->check() ? 'true' : 'false' }};
     </script>
@@ -83,16 +85,18 @@
 <script src="{{asset('assets/front/js/jquery.magnific-popup.js')}}"></script>
 <script src="{{asset('assets/front/js/bootstrap.bundle.min.js')}}"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.26.10/dist/sweetalert2.all.min.js"></script>
+      <script src="https://js.pusher.com/8.4.0/pusher.min.js"></script>
+
 <script>
 $(function() {
-    $('.popup-youtube, .popup-vimeo').magnificPopup({
-        disableOn: 700,
-        type: 'iframe',
-        mainClass: 'mfp-fade',
-        removalDelay: 160,
-        preloader: false,
-        fixedContentPos: false
-    });
+    // $('.popup-youtube, .popup-vimeo').magnificPopup({
+    //     disableOn: 700,
+    //     type: 'iframe',
+    //     mainClass: 'mfp-fade',
+    //     removalDelay: 160,
+    //     preloader: false,
+    //     fixedContentPos: false
+    // });
 
 //Register
     $(document).on("click","#Register",function() {
@@ -194,9 +198,9 @@ Swal.fire({
     });
 
 });
-document.addEventListener("contextmenu", function (e){
-    e.preventDefault();
-},false);
+// document.addEventListener("contextmenu", function (e){
+//     e.preventDefault();
+// },false);
 
 
 function validateForm(form)
@@ -232,15 +236,91 @@ SignIn.show()
             a.currentTime = 0;
         }
     });
-
+   
     if (audio.paused) {
         audio.play();
+        audio.nextElementSibling.querySelector('.play').classList.add("d-none");
+        audio.nextElementSibling.querySelector('.pause').classList.remove("d-none");
     } else {
         audio.pause();
+         audio.nextElementSibling.querySelector('.pause').classList.add("d-none");
+        audio.nextElementSibling.querySelector('.play').classList.remove("d-none");
     }
 
 
     }
+}
+
+//chat 
+if(loggedIn) {
+ // CSRF
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    Pusher.logToConsole = true;
+
+    // Init Pusher
+    var pusher = new Pusher("{{ config('broadcasting.connections.pusher.key') }}", {
+        cluster: "{{ config('broadcasting.connections.pusher.options.cluster') }}",
+        authEndpoint: "{{ url('/broadcasting/auth') }}",
+           auth: {
+        headers: {
+            'X-CSRF-TOKEN': document
+                .querySelector('meta[name="csrf-token"]')
+                .getAttribute('content')
+        }
+    }
+    });
+
+    let chatId = "{{ $chat->id ?? 0}}";
+    let userId = "{{ auth()->id() }}";
+
+    let channel = pusher.subscribe("private-chat." + chatId);
+        console.log(pusher);
+
+    channel.bind("message.sent", function(data) {
+
+        let type = data.message.sender_id == userId ? 'sender' : 'receiver';
+
+        $('.messages').append(`
+            <div class="msg ${type}">
+                ${data.message.message}
+            </div>
+        `);
+
+    });
+}
+function sendMessage(chat_id)
+{
+  if(!loggedIn)
+    {
+var SignIn = new bootstrap.Modal(document.getElementById('SignIn'))
+SignIn.show()
+    } 
+    
+     let msg = $('#msg').val().trim();
+        if(!msg) return;
+
+        $.ajax({
+        url : "{{ route('message') }}",
+        data : {
+            "_token": "{{ csrf_token() }}",
+            chat_id: chat_id,
+            message: msg
+        },
+        type : 'POST',
+        dataType : 'json',
+        success : function(result)
+        {
+        $('.messages').append(`
+            <div class="msg sender">${msg}</div>
+        `);
+        $('#msg').val('');
+
+        }
+    });
 }
 </script>
 </body>

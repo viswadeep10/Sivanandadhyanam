@@ -7,7 +7,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-    
+   <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
     <link rel="shortcut icon" href="<?php echo e(asset('assets/backend/images/favicon.png')); ?>">
 
   <!-- plugin css -->
@@ -309,9 +309,15 @@
     --------------------------------------------*/
     $modal.on('shown.bs.modal', function() {
       cropper = new Cropper(image, {
-        aspectRatio: NaN,
-        viewMode: 3,
-        preview: '.preview'
+      viewMode: 1,
+      autoCropArea: 1,
+      responsive: true,
+      restore: false,
+      scalable: false,
+      zoomable: true,
+      cropBoxResizable: true,
+      preview: '.preview',
+
       });
     }).on('hidden.bs.modal', function() {
       cropper.destroy();
@@ -326,8 +332,8 @@
     --------------------------------------------*/
     $("#crop").click(function() {
       canvas = cropper.getCroppedCanvas({
-        width: 160,
-        height: 160,
+          imageSmoothingEnabled: true,
+          imageSmoothingQuality: 'high'
       });
 
       canvas.toBlob(function(blob) {
