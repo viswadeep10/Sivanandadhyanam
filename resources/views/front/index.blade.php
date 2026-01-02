@@ -8,19 +8,25 @@
     <section class="home_banner">
         <div class="hero_wrapper">
             <div class="hero_section">
-                <img src="{{asset('assets/front/img/hero.jpg')}}" alt="Meditation Image">
+@if(auth()->check())
+<img src="{{asset('assets/front/img/hero.jpg')}}" alt="Meditation Image" class="poster">
 
-                <audio class="audio-player">
-                            <source src="" type="audio/mpeg">
-                        </audio>
-                        <a onclick="playAudio(this.previousElementSibling, this)" href="javascript:" class="popup-youtube">
-                        <img src="{{asset('assets/front/img/play.png')}}" class="play_btn">
+<audio class="audio-player" id="audioId" style="display:none" preload="none">
+<source src="" type="audio/mpeg" >
+</audio>
+<video width="100%" controls id="videoId" style="display:none" preload="none" class="audio-player">
+<source src="" type="video/mp4">
+</video>
+<a onclick="playAudio(this.previousElementSibling, this)" href="javascript:" class="popup-youtube">
+                        <img src="{{asset('assets/front/img/play.png')}}" class="play_btn play">
                         <img src="{{asset('assets/front/img/pause.png')}}" class="pause d-none"></a>
+@else
+<img src="{{asset('assets/front/img/hero.jpg')}}" alt="Meditation Image">
+@endif
                         
+
             
-<!-- <video width="100%" controls id="videoId">
-  <source src="{{asset('assets/front/Dhyanam_one.mp4')}}" type="video/mp4">
-</video> -->
+
 
 </div>
 
@@ -89,16 +95,8 @@
         </div>
     </section>
 
-    <!-- <section class="mid_img">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-12">
-                <img src="{{asset('assets/front/img/meditation.jpeg')}}">
-                </div>
-            </div>
-        </div>
-    </section> -->
-
+    
+                            @if($schedules)
     <section class="schedule" id="scrollspyHeading2">
         <div class="container">
             <div class="row align-items-center">
@@ -107,15 +105,12 @@
                     <div class="schedule_box">
                         <h2>Schedule</h2>
                         <div class="schedule_time">
-                            <p><strong>7AM:</strong> <span>Pranayama <a class="audio_play"><img src="{{asset('assets/front/img/audio.png')}}"></a></span></p>
-                            <p><strong>2AM:</strong> <span>Pranayama <a class="audio_play"><img src="{{asset('assets/front/img/audio.png')}}"></a></span></p>
-                            <p><strong>7AM:</strong> <span>Dhyanam <a class="audio_play"><img src="{{asset('assets/front/img/audio.png')}}"></a></span></p>
-                            <p><strong>8AM:</strong> <span>Pranayama <a class="audio_play"><img src="{{asset('assets/front/img/audio.png')}}"></a></span></p>
-                            <p><strong>10AM:</strong> <span>Discourse <a class="audio_play"><img src="{{asset('assets/front/img/audio.png')}}"></a></span></p>
+                            @foreach($schedules as $schedule)
+                            <p><strong>{{ \Carbon\Carbon::parse($schedule->start_time)->format('g:i A') }}:</strong> <span>{{$schedule->name}} <a class="audio_play"><img src="{{asset('assets/front/img/audio.png')}}"></a></span></p>
+                            @endforeach
                         </div>
                         
-                        <a class="btn-primary text-white mt-2" data-bs-toggle="modal" href="#exampleModalToggle" role="button">Register Now</a>
-                        <!-- <a class="btn-primary text-white mt-2" data-toggle="modal" data-target="#exampleModal">Register Now</a> -->
+                        <!-- <a class="btn-primary text-white mt-2" data-bs-toggle="modal" href="#exampleModalToggle" role="button">Register Now</a> -->
                         
                         
                     </div>
@@ -124,7 +119,7 @@
             </div>
         </div>
     </section>
-
+@endif
     
 </div>
 @endsection

@@ -9,6 +9,8 @@ use App\Http\Controllers\Admin\ScheduleController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MessageController;
 use Illuminate\Support\Facades\Broadcast;
+use App\Models\Schedule;
+
 
 
 
@@ -23,6 +25,9 @@ Route::get('/dhyasa', [PageController::class, 'dhyasa']);
 Route::post('post-login', [AuthController::class, 'postLogin'])->name('custom_login.post'); 
 Route::post('post-registration', [AuthController::class, 'postRegistration'])->name('custom_register.post'); 
 Route::get('logout', [AuthController::class, 'logout'])->name('custom_logout');
+
+
+
 //user
 Route::middleware('auth')->group(function () {
     Route::post('sendMessage', [MessageController::class, 'sendMessage'])->name('message');

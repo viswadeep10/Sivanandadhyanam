@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
 use App\Models\Meditation;
 use App\Models\Chat;
+use App\Models\Schedule;
 use DB;
 
 
@@ -18,6 +19,7 @@ class PageController extends Controller
     {
         
         $meditaions = Meditation::where('status',1)->orderBy('position','ASC')->get();
+        $schedules = Schedule::where('status',1)->orderBy('start_time','ASC')->get();
         $chat= NULL;
         $messages= NULL;
 
@@ -29,7 +31,7 @@ class PageController extends Controller
     $messages = $chat->messages()->get();
    }
 
-        return view('front.index',compact('meditaions','chat','messages'));
+        return view('front.index',compact('meditaions','chat','messages','schedules'));
     }
     public function about()
     {

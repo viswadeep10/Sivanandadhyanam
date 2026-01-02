@@ -230,6 +230,7 @@ SignIn.show()
 
     }
     else{
+    if(audio.src) {
     document.querySelectorAll('.audio-player').forEach(a => {
         if (a !== audio) {
             a.pause();
@@ -243,11 +244,11 @@ SignIn.show()
         audio.nextElementSibling.querySelector('.pause').classList.remove("d-none");
     } else {
         audio.pause();
-         audio.nextElementSibling.querySelector('.pause').classList.add("d-none");
+        audio.nextElementSibling.querySelector('.pause').classList.add("d-none");
         audio.nextElementSibling.querySelector('.play').classList.remove("d-none");
     }
 
-
+    }
     }
 }
 
@@ -287,8 +288,55 @@ if(loggedIn) {
                 ${data.message.message}
             </div>
         `);
+          scrollDown();
 
     });
+
+//for schedule
+const videoId = document.getElementById('videoId');
+const audioId = document.getElementById('audioId');
+let media_channel = pusher.subscribe("video-stream");
+function resetPlayers() {
+    videoId.pause(); audioId.pause();
+    videoId.removeAttribute('src');
+    audioId.removeAttribute('src');
+    videoId.style.display = 'none';
+    audioId.style.display = 'none';
+    document.querySelector('.poster').remove();
+}
+media_channel.bind_global(function(eventName, data) {
+    if(data.schedule)
+    {
+            resetPlayers();
+    if (data.schedule.type === 'video') {
+        
+        videoId.src = data.schedule.media;
+        videoId.style.display = 'block';
+        videoId.load();
+        safePlay(videoId)
+    } else {
+        audioId.src = data.schedule.media;
+        audioId.style.display = 'block';
+        audioId.load();
+        safePlay(audioId)
+    }
+    }
+    })
+
+    function safePlay(player) {
+    let playPromise = player.play();
+
+    if (playPromise !== undefined) {
+        playPromise.then(_ => {
+            // Automatic playback started!
+            console.log("Playback started successfully");
+        })
+        .catch(error => {
+            // Auto-play was prevented or interrupted
+            console.log("Playback prevented: ", error);
+        });
+    }
+}
 }
 function sendMessage(chat_id)
 {
@@ -316,10 +364,26 @@ SignIn.show()
         //     <div class="msg sender">${msg}</div>
         // `);
         $('#msg').val('');
+        scrollDown();
 
         }
     });
 }
+
+function scrollDown() {
+      let box = document.getElementsByClassName('messages')[0];
+      box.scrollTop = box.scrollHeight;
+  }
+    $(document).on("click",".audio_play",function() 
+    {
+        if(!loggedIn)
+    {
+var SignIn = new bootstrap.Modal(document.getElementById('SignIn'))
+SignIn.show()
+    } 
+    })
+    
+
 </script>
 </body>
 </html>

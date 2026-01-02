@@ -130,7 +130,6 @@
   }
   chatID = chat_id;
   activeChannel = pusher.subscribe('private-chat.' + chat_id);
-          console.log(activeChannel)
 
         activeChannel.bind('message.sent', function (data) {
           $('.messages').append(`

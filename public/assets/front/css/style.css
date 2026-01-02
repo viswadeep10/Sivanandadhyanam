@@ -180,7 +180,7 @@ marquee { background: rgb(255 146 21 / 20%); padding: 12px; display: block;}
 .home_banner .hero_wrapper .chat_box .chat_head { background: #FF9215; color: #fff; border-radius: 15px 15px 0 0; padding: 30px;}
 .home_banner .hero_wrapper .chat_box .chat_head p { margin-bottom: 0; font-size: 15px;}
 .home_banner .hero_wrapper .chat_box .chat_head p strong { font-size: 20px;}
-.home_banner .hero_wrapper .chat_box .msg_container { padding: 20px 20px 0; position: relative; overflow-y: auto;}
+.home_banner .hero_wrapper .chat_box .msg_container { padding: 20px 20px 0; position: relative; overflow-y: auto;height:450px;}
 .home_banner .hero_wrapper .chat_box .msg_container .msg { padding: 20px; box-shadow: 0px 2px 2px rgba(0,0,0,0.1); background: #fff; border-radius: 15px; margin-bottom: 10px;}
 .home_banner .hero_wrapper .chat_box .msg_container .msg p { margin: 0; font-size: 16px; line-height: 23px;}
 .home_banner .hero_wrapper .chat_box .msg_container .type_msg { margin-top: 50px; background: #F3EBE1; padding: 5px 5px 17px; position: sticky; bottom: 0; left: 0; width: 100%;}
@@ -273,7 +273,7 @@ span.error { font-size: 12px; margin-top: -6px; display: block; margin-bottom: 1
 @media (max-width: 1600px) {
     .home_banner .hero_wrapper .chat_box .chat_head p strong { font-size: 17px;}
     .home_banner .hero_wrapper .chat_box .chat_head p { font-size: 14px;}
-    .home_banner .hero_wrapper .chat_box .msg_container { height: 365;}
+    .home_banner .hero_wrapper .chat_box .msg_container { height: 365px;}
     .home_banner .hero_wrapper .chat_box .msg_container .type_msg { margin-top: 20px; padding: 15px 20px;}
     .home_banner .hero_wrapper .chat_box .msg_container .msg p { font-size: 15px; line-height: 20px; margin-bottom: 5px;}
     section.quick_links .quick_links_box .quick_links_play { letter-spacing: 2px; font-size: 16px;}

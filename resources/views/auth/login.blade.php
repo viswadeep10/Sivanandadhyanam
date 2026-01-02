@@ -86,7 +86,12 @@
 
     <!-- plugin js -->
         <!-- end plugin js -->
+<script>
+document.addEventListener("contextmenu", function (e){
+    e.preventDefault();
+},false);
 
+</script>
     </body>
 
 </html>
